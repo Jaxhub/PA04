@@ -9,6 +9,7 @@ var transactionSchema = Schema( {
   amount: Number,
   category: String,
   createdAt: Date,
+  uuid: { type: String, default: () => uuidv4() }
 } );
 
 module.exports = mongoose.model( 'NewTransactions', transactionSchema );

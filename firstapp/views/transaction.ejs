@@ -1,34 +1,68 @@
-<h1>Transactions</h1>
+<!-- transaction.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Transactions</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #4285f4;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      .table-header {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Transactions</h1>
 
-<table>
-  <tr>
-    <th>Description</th>
-    <th>Amount</th>
-    <th>Category</th>
-    <th>Date</th>
-  </tr>
-  <% transactions.forEach(function(transaction) { %>
-    <tr>
-      <td><%= transaction.description %></td>
-      <td><%= transaction.amount %></td>
-      <td><%= transaction.category %></td>
-      <td><%= transaction.createdAt.toDateString() %></td>
-    </tr>
-  <% }); %>
-</table>
+    <table>
+      <tr class="table-header">
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Delete</th>
+      </tr>
+      <% transactions.forEach(function(transaction) { %>
+        <tr>
+          <td><%= transaction.description %></td>
+          <td><%= transaction.amount %></td>
+          <td><%= transaction.category %></td>
+          <td><%= transaction.createdAt.toDateString() %></td>
+          <td>
+            <form method="post" action="/transactions/<%= transaction.id %>?_method=delete">
+              <input type="submit" value="Delete">
+            </form>
+        </tr>
+      <% }); %>
+    </table>
 
-<form method="post" action="/transactions">
-  <label for="description">Description:</label>
-  <input type="text" name="description" id="description">
+    <form method="post" action="/transactions">
+      <label for="description">Description:</label>
+      <input type="text" name="description" id="description">
 
-  <label for="amount">Amount:</label>
-  <input type="text" name="amount" id="amount">
+      <label for="amount">Amount:</label>
+      <input type="text" name="amount" id="amount">
 
-  <label for="category">Category:</label>
-  <input type="text" name="category" id="category">
+      <label for="category">Category:</label>
+      <input type="text" name="category" id="category">
 
-  <label for="date">Date:</label>
-  <input type="text" name="date" id="date">
+      <label for="date">Date:</label>
+      <input type="text" name="date" id="date">
 
-  <input type="submit" value="Add transaction">
-</form>
+      <input type="submit" value="Add transaction">
+    </form>
+  </body>
+</html>
