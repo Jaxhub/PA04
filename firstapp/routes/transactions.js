@@ -3,19 +3,19 @@ const router = express.Router();
 const transaction = require('../models/NewTransactions');
 const fs = require('fs');
 
-if (!fs.existsSync('./data')) {
+if (!fs.existsSync('./data')) { //check to see the directory exists
   fs.mkdirSync('./data');
   fs.writeFileSync('./data', '[]');
 }
 const FILE_PATH = './data/transactions.json';
 
-let unformattedTransactions = [];
+let unformattedTransactions = []; //create an empty array for the transactions
 if (fs.existsSync(FILE_PATH)) {
   const data = fs.readFileSync(FILE_PATH);
   unformattedTransactions = JSON.parse(data);
 }
 
-let transactions = unformattedTransactions.map(unformattedTransactions => {
+let transactions = unformattedTransactions.map(unformattedTransactions => { // map the transactions
   return {
     id: unformattedTransactions.id,
     description: unformattedTransactions.description,
@@ -30,7 +30,7 @@ router.get('/transaction', function(req, res) {
 });;
   
 
-router.post('/transactions', function(req, res) {
+router.post('/transactions', function(req, res) { //post the transactions to the page
     const transactionData = {
       id: Date.now(),
       description: req.body.description,
@@ -45,7 +45,7 @@ router.post('/transactions', function(req, res) {
     console.log(transactions);
   });
 
-router.delete('/transactions/:id', function(req, res) {
+router.delete('/transactions/:id', function(req, res) { //pretty straightfoward delete transaction by id
     const id = req.params.id;
     transactions = transactions.filter(transaction => transaction.id != req.params.id);
     const data = JSON.stringify(transactions);
